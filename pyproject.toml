@@ -1,0 +1,27 @@
+[project]
+name = "llm-fragments-dir"
+version = "0.1"
+description = "Load files from a local directory as fragments"
+readme = "README.md"
+authors = [{name = "R. Keelan"}]
+license = "Apache-2.0"
+requires-python = ">=3.9"
+dependencies = [
+    "llm"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+Homepage = "https://github.com/rkeelan/llm-fragments-dir"
+Changelog = "https://github.com/rkeelan/llm-fragments-dir/releases"
+Issues = "https://github.com/rkeelan/llm-fragments-dir/issues"
+CI = "https://github.com/rkeelan/llm-fragments-dir/actions"
+
+[project.entry-points.llm]
+fragments_dir = "llm_fragments_dir"
+
+[project.optional-dependencies]
+test = ["pytest"]

@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "llm-fragments-dir"
+version: "0.1"
+date-released: "2025-05-07"
+url: "https://github.com/rkeelan/llm-fragments-dir"
+repository-code: "https://github.com/rkeelan/llm-fragments-dir"
+abstract: "Load files from a local directory as fragments. The current implementation will only attempt to load files that it thinks are UTF-8 encoded."
+keywords:
+  - llm
+  - fragments
+  - directory
+  - files
+  - plugin
+license: Apache-2.0
+authors:
+  - family-names: "Keelan"
+    given-names: "R."
+preferred-citation:
+  type: software
+  title: "llm-fragments-dir"
+  version: "0.1"
+  url: "https://github.com/rkeelan/llm-fragments-dir"
+  authors:
+    - family-names: "Keelan"
+      given-names: "R." 

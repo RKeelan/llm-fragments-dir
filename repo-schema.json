@@ -1,0 +1,80 @@
+{
+  "name": "llm-fragments-dir",
+  "description": "Load files from a local directory as fragments",
+  "type": "python-package",
+  "category": "llm-plugin",
+  "language": "python",
+  "framework": "llm",
+  "license": "Apache-2.0",
+  "repository": {
+    "url": "https://github.com/rkeelan/llm-fragments-dir",
+    "type": "git"
+  },
+  "package": {
+    "name": "llm-fragments-dir",
+    "version": "0.1",
+    "pypi": "https://pypi.org/project/llm-fragments-dir/",
+    "entry_points": {
+      "llm": {
+        "fragments_dir": "llm_fragments_dir"
+      }
+    }
+  },
+  "structure": {
+    "source": {
+      "main_module": "llm_fragments_dir.py",
+      "description": "Main plugin module with fragment loader implementation"
+    },
+    "tests": {
+      "directory": "tests/",
+      "framework": "pytest",
+      "coverage": {
+        "tool": "pytest-cov",
+        "threshold": 95,
+        "enforcement": "ci-fail-under",
+        "current": 100
+      }
+    },
+    "ci": {
+      "workflows": [
+        {
+          "name": "test.yml",
+          "description": "Run tests with coverage across multiple Python versions",
+          "triggers": ["push", "pull_request"]
+        },
+        {
+          "name": "publish.yml", 
+          "description": "Publish package to PyPI on release"
+        }
+      ]
+    },
+    "documentation": {
+      "readme": "README.md",
+      "license": "LICENSE"
+    }
+  },
+  "dependencies": {
+    "runtime": [
+      "llm"
+    ],
+    "development": [
+      "coverage[toml]>=7.5",
+      "pytest>=8.0",
+      "pytest-cov>=5.0"
+    ]
+  },
+  "python": {
+    "minimum_version": "3.9",
+    "tested_versions": ["3.9", "3.10", "3.11", "3.12", "3.13"]
+  },
+  "features": [
+    "Recursively loads text files from directories",
+    "UTF-8 encoding detection",
+    "Binary file filtering",
+    "LLM fragment integration"
+  ],
+  "usage": {
+    "command": "llm -f dir:path/to/directory \"Your prompt here\"",
+    "description": "Load all text files from a directory as context fragments"
+  }
+} 

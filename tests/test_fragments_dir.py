@@ -2,7 +2,21 @@ import os
 import pathlib
 import pytest
 import tempfile
-from llm_fragments_dir import directory_loader, is_probably_utf8
+import llm
+from llm_fragments_dir import directory_loader, is_probably_utf8, register_fragment_loaders
+
+
+def test_register_fragment_loaders():
+    """Test that the hook registration function works correctly."""
+    registered_loaders = {}
+    
+    def mock_register(name, loader_func):
+        registered_loaders[name] = loader_func
+    
+    register_fragment_loaders(mock_register)
+    
+    assert "dir" in registered_loaders
+    assert registered_loaders["dir"] == directory_loader
 
 
 def test_directory_loader_with_nonexistent_directory():
@@ -82,6 +96,28 @@ def test_directory_loader_skips_binary_files():
         assert len(fragments) == 1
         assert str(fragments[0]) == "Text content"
         assert fragments[0].source == str(text_file)
+
+
+def test_directory_loader_handles_unicode_decode_error(monkeypatch):
+    """Test that UnicodeDecodeError is handled gracefully during file reading."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmpdir_path = pathlib.Path(tmpdir)
+        # Create a file that passes the UTF-8 check but fails when reading
+        problematic_file = tmpdir_path / "problematic.txt"
+        problematic_file.write_text("Valid UTF-8 content", encoding="utf-8")
+        
+        # Mock read_text to raise UnicodeDecodeError
+        original_read_text = pathlib.Path.read_text
+        def mock_read_text(self, *args, **kwargs):
+            if self.name == "problematic.txt":
+                raise UnicodeDecodeError("utf-8", b"", 0, 1, "mock error")
+            return original_read_text(self, *args, **kwargs)
+        
+        monkeypatch.setattr(pathlib.Path, "read_text", mock_read_text)
+        
+        # The function should handle the error gracefully and skip the file
+        fragments = directory_loader(tmpdir)
+        assert len(fragments) == 0
 
 
 def test_is_probably_utf8():

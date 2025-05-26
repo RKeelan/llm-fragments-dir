@@ -34,8 +34,8 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -e '.[test]'
-    - name: Run tests
+    - name: Run tests with coverage
       env:
         GITHUB_TOKEN: ${{ secrets.TEST_PAT }}
       run: |
-        python -m pytest
+        python -m pytest --cov=llm_fragments_dir --cov-report=term-missing --cov-fail-under=95

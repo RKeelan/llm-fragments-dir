@@ -10,3 +10,6 @@ venv
 .vscode
 dist
 build
+.coverage
+coverage.xml
+htmlcov

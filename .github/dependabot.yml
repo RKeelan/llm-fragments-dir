@@ -3,10 +3,16 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
-      time: "05:00"
+      interval: "weekly"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "daily"
-      time: "05:00"
+      interval: "weekly"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
